@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUC AI — Rodeo FX</title>
+    <style>
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-hover: #222632;
+            --border: #2a2e3a;
+            --text: #e4e4e7;
+            --text-muted: #8b8d97;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: url('/static/bg.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 17, 23, 0.82);
+            z-index: 0;
+        }
+
+        .header, .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .header .badge {
+            font-size: 11px;
+            background: var(--accent);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-weight: 500;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            padding: 48px 24px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h2 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 16px 20px;
+            padding-right: 120px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent);
+        }
+
+        .input-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .input-group button {
+            position: absolute;
+            right: 6px;
+            top: 6px;
+            bottom: 6px;
+            padding: 0 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .input-group button:hover { background: var(--accent-hover); }
+        .input-group button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .hint {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 32px;
+        }
+
+        .hint a { color: var(--accent); text-decoration: none; }
+        .hint a:hover { text-decoration: underline; }
+
+        /* Steps timeline */
+        .steps {
+            display: none;
+            margin-top: 32px;
+        }
+
+        .steps.visible { display: block; }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-left: 2px solid var(--border);
+            margin-left: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 16px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+        }
+
+        .step.done::before { background: var(--success); }
+        .step.working::before {
+            background: var(--accent);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .step.error::before { background: var(--error); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        .step-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            min-width: 60px;
+        }
+
+        .step-detail {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Result card */
+        .result {
+            display: none;
+            margin-top: 24px;
+            padding: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .result.visible { display: block; }
+
+        .result.success { border-color: var(--success); }
+        .result.error { border-color: var(--error); }
+
+        .result h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .result a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .result a:hover { text-decoration: underline; }
+
+        /* Bookmarklet section */
+        .bookmarklet-section {
+            margin-top: 48px;
+            padding: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+        }
+
+        .bookmarklet-section h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .bookmarklet-section p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .bookmarklet-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--surface-hover);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            color: var(--accent);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: grab;
+            transition: border-color 0.2s;
+        }
+
+        .bookmarklet-link:hover {
+            border-color: var(--accent);
+        }
+
+        .instructions {
+            margin-top: 12px;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .header .logo {
+            width: 144px;
+            height: 144px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(99, 102, 241, 0.4);
+            flex-shrink: 0;
+        }
+
+        .header .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo"><img src="/static/bg.jpg" alt="LUC AI"></div>
+        <h1>LUC AI</h1>
+        <span class="badge">Rodeo FX</span>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Track a New Opportunity</h2>
+            <p>Paste a URL from Deadline, Variety, THR, or use the IMDb Pro bookmarklet below.</p>
+        </div>
+
+        <div class="input-group">
+            <input type="url" id="urlInput" placeholder="https://deadline.com/2026/04/..." autofocus>
+            <button id="submitBtn" onclick="processUrl()">Process</button>
+        </div>
+
+        <p class="hint">
+            For IMDb Pro pages, use the <a href="#bookmarklet">bookmarklet below</a> instead.
+        </p>
+
+        <div class="steps" id="stepsContainer"></div>
+
+        <div class="result" id="resultCard"></div>
+
+        <div class="bookmarklet-section" id="bookmarklet">
+            <h3>IMDb Pro Bookmarklet</h3>
+            <p>
+                Drag this button to your bookmarks bar. When you're on an IMDb Pro project page,
+                click it to send the project data directly to this tool.
+            </p>
+
+            <a class="bookmarklet-link" id="bookmarkletLink" href="#">
+                📎 Send to LUC AI
+            </a>
+
+            <ol class="instructions">
+                <li>Drag the button above to your browser's bookmarks bar</li>
+                <li>Navigate to a project page on IMDb Pro</li>
+                <li>Click the bookmark — it'll scrape the page and send data here</li>
+                <li>The opportunity will be created/updated in Monday.com automatically</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Generate the bookmarklet href dynamically based on current host
+        const appUrl = window.location.origin;
+
+        const bookmarkletCode = `javascript:(function(){
+            const data={};
+            try{
+                data.title=document.querySelector('h1')?.innerText?.trim()||'';
+                const details=document.querySelectorAll('[data-testid]');
+                const pageText=document.body.innerText;
+
+                /* Try to extract key fields from page text */
+                const extract=(label)=>{
+                    const re=new RegExp(label+'[:\\\\s]*([^\\\\n]+)','i');
+                    const m=pageText.match(re);
+                    return m?m[1].trim():null;
+                };
+
+                data.description=extract('Plot Summary')||extract('Logline')||'';
+                data.distributor=extract('Distributor')||extract('Distribution Company')||'';
+                data.production_status=extract('Production Status')||extract('Status')||'';
+                data.genre=extract('Genre')||'';
+                data.type=(pageText.match(/TV Series|TV Mini/i)?'VFX Episodic':'VFX Film');
+                data.director=extract('Director')||extract('Directed by')||'';
+                data.writer=extract('Writer')||extract('Written by')||'';
+                data.cast=extract('Cast')||'';
+                data.imdb_pro_url=window.location.href;
+
+                /* Send to app */
+                fetch('${appUrl}/api/process',{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({url:window.location.href,imdb_data:data})
+                })
+                .then(r=>r.json())
+                .then(d=>{
+                    if(d.success){
+                        alert('✅ '+d.title+'\\n\\n'+(d.created_new?'New opportunity created':'Existing opportunity updated')+'\\n\\nView: '+d.monday_url);
+                    }else{
+                        alert('❌ Error: '+(d.error||'Unknown error'));
+                    }
+                })
+                .catch(e=>alert('❌ Network error: '+e.message));
+            }catch(e){alert('❌ Error scraping page: '+e.message);}
+        })();`;
+
+        document.getElementById('bookmarkletLink').href = bookmarkletCode;
+
+        // ── Process URL ────────────────────────────────────────────────
+        async function processUrl() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) return;
+
+            const btn = document.getElementById('submitBtn');
+            const stepsEl = document.getElementById('stepsContainer');
+            const resultEl = document.getElementById('resultCard');
+
+            // Reset
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Working...';
+            stepsEl.innerHTML = '';
+            stepsEl.classList.add('visible');
+            resultEl.classList.remove('visible', 'success', 'error');
+
+            // Add initial step
+            addStep(stepsEl, 'Start', 'working', 'Processing URL...');
+
+            try {
+                const resp = await fetch('/api/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url }),
+                });
+
+                const data = await resp.json();
+
+                // Clear and show real steps
+                stepsEl.innerHTML = '';
+                if (data.steps) {
+                    data.steps.forEach(s => addStep(stepsEl, s.step, s.status, s.detail));
+                }
+
+                if (data.success) {
+                    resultEl.innerHTML = `
+                        <h3>✅ ${data.created_new ? 'Opportunity Created' : 'Opportunity Updated'}</h3>
+                        <p>
+                            <strong>${data.title}</strong>
+                            ${data.existing_board ? ` — found on ${data.existing_board}` : ' — added to F & E Watchlist'}
+                        </p>
+                        <p style="margin-top: 8px;">
+                            <a href="${data.monday_url}" target="_blank">Open in Monday.com →</a>
+                        </p>
+                    `;
+                    resultEl.classList.add('visible', 'success');
+                } else {
+                    resultEl.innerHTML = `
+                        <h3>❌ Error</h3>
+                        <p>${data.error || 'Something went wrong'}</p>
+                    `;
+                    resultEl.classList.add('visible', 'error');
+                }
+            } catch (e) {
+                resultEl.innerHTML = `
+                    <h3>❌ Network Error</h3>
+                    <p>${e.message}</p>
+                `;
+                resultEl.classList.add('visible', 'error');
+            }
+
+            btn.disabled = false;
+            btn.textContent = 'Process';
+        }
+
+        function addStep(container, label, status, detail) {
+            const div = document.createElement('div');
+            div.className = `step ${status}`;
+            div.innerHTML = `
+                <span class="step-label">${label}</span>
+                <span class="step-detail">${detail}</span>
+            `;
+            container.appendChild(div);
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('urlInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') processUrl();
+        });
+
+        // Handle bookmarklet results via URL params
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('imdb_data')) {
+            try {
+                const imdbData = JSON.parse(decodeURIComponent(params.get('imdb_data')));
+                document.getElementById('urlInput').value = imdbData.imdb_pro_url || '';
+                // Auto-process
+                setTimeout(() => processUrl(), 500);
+            } catch (e) {
+                console.error('Failed to parse IMDb data from URL params');
+            }
+        }
+    </script>
+</body>
+</html>

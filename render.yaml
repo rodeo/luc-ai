@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: luc-ai
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 2 app:app
+    plan: free
+    envVars:
+      - key: MONDAY_API_TOKEN
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
