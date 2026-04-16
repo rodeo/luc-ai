@@ -403,7 +403,8 @@
                 };
  
                 data.description=extract('Plot Summary')||extract('Logline')||extract('Synopsis')||'';
-                data.distributor=extract('Distributor')||extract('Distribution Company')||extract('Production Companies')||extract('Production Co')||'';
+                data.production_company=extract('Production Company')||'';
+                data.distributor=extract('Distributor')||extract('Distribution Company')||'';
                 data.production_status=extract('Production Status')||extract('Status')||'';
                 data.genre=extract('Genre')||extract('Genres')||'';
                 data.type=(pageText.match(/TV Series|TV Mini|TV Movie|Television/i)?'VFX Episodic':'VFX Film');
@@ -412,7 +413,6 @@
                 data.cast=extract('Cast')||extract('Stars')||'';
                 data.imdb_pro_url=window.location.href;
  
-                /* Debug: show what was found */
                 if(!data.title){
                     alert('DEBUG: Could not find title.\\n\\nPage title: '+document.title+'\\n\\nFirst h1: '+(document.querySelector('h1')?.outerHTML||'none')+'\\n\\nFirst 500 chars: '+pageText.substring(0,500));
                     return;
