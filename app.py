@@ -9,12 +9,14 @@ import json
 import re
 import requests
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from anthropic import Anthropic
 from dotenv import load_dotenv
  
 load_dotenv()
  
 app = Flask(__name__)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
  
 # ── Config ──────────────────────────────────────────────────────────────────
 MONDAY_API_URL = "https://api.monday.com/v2"
