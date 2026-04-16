@@ -319,13 +319,14 @@ def process_url():
             if imdb_url:
                 column_values[WATCHLIST_COLUMNS["imdb_pro"]] = imdb_url
  
-            # Search for the account/distributor
-            studio = project.get("studio") or project.get("distributor")
+            # Search for the account — try production company, distributor, and studio
             account = None
-            if studio:
-                account = search_accounts(studio)
-                if account:
-                    column_values[WATCHLIST_COLUMNS["accounts"]] = {"item_ids": [int(account["id"])]}
+            for candidate in [project.get("production_company"), project.get("distributor"), project.get("studio")]:
+                if candidate:
+                    account = search_accounts(candidate)
+                    if account:
+                        column_values[WATCHLIST_COLUMNS["accounts"]] = {"item_ids": [int(account["id"])]}
+                        break
  
             new_item = create_watchlist_item(title, column_values)
             item_id = new_item["id"]
@@ -356,20 +357,16 @@ def process_url():
  
         # ── Step 5: Determine account name for subitem ──────────────────
         account_name = "studio"
-        if not is_imdb_pro and project.get("studio"):
-            account = search_accounts(project["studio"])
-            if account:
-                account_name = account["name"]
-        elif is_imdb_pro and project.get("distributor"):
-            account = search_accounts(project["distributor"])
-            if account:
-                account_name = account["name"]
- 
-        # If we created the item and found an account earlier, use that
-        if created_new and studio:
-            found = search_accounts(studio)
-            if found:
-                account_name = found["name"]
+        if account:
+            # Already found during creation step
+            account_name = account["name"]
+        else:
+            for candidate in [project.get("production_company"), project.get("distributor"), project.get("studio")]:
+                if candidate:
+                    found = search_accounts(candidate)
+                    if found:
+                        account_name = found["name"]
+                        break
  
         # ── Step 6: Create subitem ──────────────────────────────────────
         steps.append({"step": "Subitem", "status": "working", "detail": "Creating follow-up subitem..."})
@@ -406,3 +403,4 @@ def receive_imdb_data():
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=os.getenv("FLASK_DEBUG", "false").lower() == "true")
+ 
