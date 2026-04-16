@@ -299,6 +299,7 @@ def process_url():
         item_id = None
         item_name = None
         created_new = False
+        account = None
  
         if existing_item:
             item_id = existing_item["id"]
