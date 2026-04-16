@@ -19,9 +19,9 @@
             --warning: #f59e0b;
             --radius: 12px;
         }
-
+ 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg);
@@ -36,7 +36,7 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
-
+ 
         body::before {
             content: '';
             position: fixed;
@@ -47,12 +47,12 @@
             background: rgba(15, 17, 23, 0.82);
             z-index: 0;
         }
-
+ 
         .header, .container {
             position: relative;
             z-index: 1;
         }
-
+ 
         .header {
             width: 100%;
             padding: 20px 32px;
@@ -61,13 +61,13 @@
             align-items: center;
             gap: 12px;
         }
-
+ 
         .header h1 {
             font-size: 18px;
             font-weight: 600;
             letter-spacing: -0.02em;
         }
-
+ 
         .header .badge {
             font-size: 11px;
             background: var(--accent);
@@ -76,36 +76,36 @@
             border-radius: 100px;
             font-weight: 500;
         }
-
+ 
         .container {
             width: 100%;
             max-width: 680px;
             padding: 48px 24px;
         }
-
+ 
         .hero {
             text-align: center;
             margin-bottom: 40px;
         }
-
+ 
         .hero h2 {
             font-size: 28px;
             font-weight: 700;
             letter-spacing: -0.03em;
             margin-bottom: 8px;
         }
-
+ 
         .hero p {
             color: var(--text-muted);
             font-size: 15px;
             line-height: 1.5;
         }
-
+ 
         .input-group {
             position: relative;
             margin-bottom: 16px;
         }
-
+ 
         .input-group input {
             width: 100%;
             padding: 16px 20px;
@@ -118,15 +118,15 @@
             outline: none;
             transition: border-color 0.2s;
         }
-
+ 
         .input-group input:focus {
             border-color: var(--accent);
         }
-
+ 
         .input-group input::placeholder {
             color: var(--text-muted);
         }
-
+ 
         .input-group button {
             position: absolute;
             right: 6px;
@@ -142,31 +142,31 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-
+ 
         .input-group button:hover { background: var(--accent-hover); }
         .input-group button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-
+ 
         .hint {
             text-align: center;
             color: var(--text-muted);
             font-size: 13px;
             margin-bottom: 32px;
         }
-
+ 
         .hint a { color: var(--accent); text-decoration: none; }
         .hint a:hover { text-decoration: underline; }
-
+ 
         /* Steps timeline */
         .steps {
             display: none;
             margin-top: 32px;
         }
-
+ 
         .steps.visible { display: block; }
-
+ 
         .step {
             display: flex;
             align-items: flex-start;
@@ -177,7 +177,7 @@
             padding-left: 20px;
             position: relative;
         }
-
+ 
         .step::before {
             content: '';
             position: absolute;
@@ -188,19 +188,19 @@
             border-radius: 50%;
             background: var(--border);
         }
-
+ 
         .step.done::before { background: var(--success); }
         .step.working::before {
             background: var(--accent);
             animation: pulse 1.5s ease-in-out infinite;
         }
         .step.error::before { background: var(--error); }
-
+ 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.3); }
         }
-
+ 
         .step-label {
             font-size: 12px;
             font-weight: 600;
@@ -208,12 +208,12 @@
             color: var(--text-muted);
             min-width: 60px;
         }
-
+ 
         .step-detail {
             font-size: 14px;
             line-height: 1.5;
         }
-
+ 
         /* Result card */
         .result {
             display: none;
@@ -223,12 +223,12 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
         }
-
+ 
         .result.visible { display: block; }
-
+ 
         .result.success { border-color: var(--success); }
         .result.error { border-color: var(--error); }
-
+ 
         .result h3 {
             font-size: 16px;
             margin-bottom: 8px;
@@ -236,21 +236,21 @@
             align-items: center;
             gap: 8px;
         }
-
+ 
         .result p {
             font-size: 14px;
             color: var(--text-muted);
             line-height: 1.5;
         }
-
+ 
         .result a {
             color: var(--accent);
             text-decoration: none;
             font-weight: 500;
         }
-
+ 
         .result a:hover { text-decoration: underline; }
-
+ 
         /* Bookmarklet section */
         .bookmarklet-section {
             margin-top: 48px;
@@ -259,19 +259,19 @@
             border: 1px solid var(--border);
             border-radius: var(--radius);
         }
-
+ 
         .bookmarklet-section h3 {
             font-size: 15px;
             margin-bottom: 8px;
         }
-
+ 
         .bookmarklet-section p {
             font-size: 13px;
             color: var(--text-muted);
             line-height: 1.6;
             margin-bottom: 12px;
         }
-
+ 
         .bookmarklet-link {
             display: inline-block;
             padding: 10px 20px;
@@ -285,22 +285,22 @@
             cursor: grab;
             transition: border-color 0.2s;
         }
-
+ 
         .bookmarklet-link:hover {
             border-color: var(--accent);
         }
-
+ 
         .instructions {
             margin-top: 12px;
             padding-left: 20px;
         }
-
+ 
         .instructions li {
             font-size: 13px;
             color: var(--text-muted);
             line-height: 1.8;
         }
-
+ 
         .spinner {
             display: inline-block;
             width: 16px;
@@ -312,7 +312,7 @@
             vertical-align: middle;
             margin-right: 6px;
         }
-
+ 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
@@ -324,7 +324,7 @@
             border: 2px solid rgba(99, 102, 241, 0.4);
             flex-shrink: 0;
         }
-
+ 
         .header .logo img {
             width: 100%;
             height: 100%;
@@ -338,37 +338,37 @@
         <h1>LUC AI</h1>
         <span class="badge">Rodeo FX</span>
     </div>
-
+ 
     <div class="container">
         <div class="hero">
             <h2>Track a New Opportunity</h2>
             <p>Paste a URL from Deadline, Variety, THR, or use the IMDb Pro bookmarklet below.</p>
         </div>
-
+ 
         <div class="input-group">
             <input type="url" id="urlInput" placeholder="https://deadline.com/2026/04/..." autofocus>
             <button id="submitBtn" onclick="processUrl()">Process</button>
         </div>
-
+ 
         <p class="hint">
             For IMDb Pro pages, use the <a href="#bookmarklet">bookmarklet below</a> instead.
         </p>
-
+ 
         <div class="steps" id="stepsContainer"></div>
-
+ 
         <div class="result" id="resultCard"></div>
-
+ 
         <div class="bookmarklet-section" id="bookmarklet">
             <h3>IMDb Pro Bookmarklet</h3>
             <p>
                 Drag this button to your bookmarks bar. When you're on an IMDb Pro project page,
                 click it to send the project data directly to this tool.
             </p>
-
+ 
             <a class="bookmarklet-link" id="bookmarkletLink" href="#">
                 📎 Send to LUC AI
             </a>
-
+ 
             <ol class="instructions">
                 <li>Drag the button above to your browser's bookmarks bar</li>
                 <li>Navigate to a project page on IMDb Pro</li>
@@ -377,35 +377,47 @@
             </ol>
         </div>
     </div>
-
+ 
     <script>
         // Generate the bookmarklet href dynamically based on current host
         const appUrl = window.location.origin;
-
+ 
         const bookmarkletCode = `javascript:(function(){
             const data={};
             try{
-                data.title=document.querySelector('h1')?.innerText?.trim()||'';
-                const details=document.querySelectorAll('[data-testid]');
+                /* Try multiple selectors for the title */
+                data.title=
+                    document.querySelector('#title_heading span')?.innerText?.trim()||
+                    document.querySelector('#title_heading')?.querySelector('span')?.innerText?.trim()||
+                    document.querySelector('h1 span')?.innerText?.trim()||
+                    document.querySelector('h1')?.innerText?.trim()||
+                    document.title.replace(/ - IMDb.*$/i,'').trim()||'';
+ 
                 const pageText=document.body.innerText;
-
+ 
                 /* Try to extract key fields from page text */
                 const extract=(label)=>{
                     const re=new RegExp(label+'[:\\\\s]*([^\\\\n]+)','i');
                     const m=pageText.match(re);
                     return m?m[1].trim():null;
                 };
-
-                data.description=extract('Plot Summary')||extract('Logline')||'';
-                data.distributor=extract('Distributor')||extract('Distribution Company')||'';
+ 
+                data.description=extract('Plot Summary')||extract('Logline')||extract('Synopsis')||'';
+                data.distributor=extract('Distributor')||extract('Distribution Company')||extract('Production Companies')||extract('Production Co')||'';
                 data.production_status=extract('Production Status')||extract('Status')||'';
-                data.genre=extract('Genre')||'';
-                data.type=(pageText.match(/TV Series|TV Mini/i)?'VFX Episodic':'VFX Film');
+                data.genre=extract('Genre')||extract('Genres')||'';
+                data.type=(pageText.match(/TV Series|TV Mini|TV Movie|Television/i)?'VFX Episodic':'VFX Film');
                 data.director=extract('Director')||extract('Directed by')||'';
-                data.writer=extract('Writer')||extract('Written by')||'';
-                data.cast=extract('Cast')||'';
+                data.writer=extract('Writer')||extract('Written by')||extract('Screenplay')||'';
+                data.cast=extract('Cast')||extract('Stars')||'';
                 data.imdb_pro_url=window.location.href;
-
+ 
+                /* Debug: show what was found */
+                if(!data.title){
+                    alert('DEBUG: Could not find title.\\n\\nPage title: '+document.title+'\\n\\nFirst h1: '+(document.querySelector('h1')?.outerHTML||'none')+'\\n\\nFirst 500 chars: '+pageText.substring(0,500));
+                    return;
+                }
+ 
                 /* Send to app */
                 fetch('${appUrl}/api/process',{
                     method:'POST',
@@ -423,43 +435,43 @@
                 .catch(e=>alert('❌ Network error: '+e.message));
             }catch(e){alert('❌ Error scraping page: '+e.message);}
         })();`;
-
+ 
         document.getElementById('bookmarkletLink').href = bookmarkletCode;
-
+ 
         // ── Process URL ────────────────────────────────────────────────
         async function processUrl() {
             const url = document.getElementById('urlInput').value.trim();
             if (!url) return;
-
+ 
             const btn = document.getElementById('submitBtn');
             const stepsEl = document.getElementById('stepsContainer');
             const resultEl = document.getElementById('resultCard');
-
+ 
             // Reset
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner"></span>Working...';
             stepsEl.innerHTML = '';
             stepsEl.classList.add('visible');
             resultEl.classList.remove('visible', 'success', 'error');
-
+ 
             // Add initial step
             addStep(stepsEl, 'Start', 'working', 'Processing URL...');
-
+ 
             try {
                 const resp = await fetch('/api/process', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url }),
                 });
-
+ 
                 const data = await resp.json();
-
+ 
                 // Clear and show real steps
                 stepsEl.innerHTML = '';
                 if (data.steps) {
                     data.steps.forEach(s => addStep(stepsEl, s.step, s.status, s.detail));
                 }
-
+ 
                 if (data.success) {
                     resultEl.innerHTML = `
                         <h3>✅ ${data.created_new ? 'Opportunity Created' : 'Opportunity Updated'}</h3>
@@ -486,11 +498,11 @@
                 `;
                 resultEl.classList.add('visible', 'error');
             }
-
+ 
             btn.disabled = false;
             btn.textContent = 'Process';
         }
-
+ 
         function addStep(container, label, status, detail) {
             const div = document.createElement('div');
             div.className = `step ${status}`;
@@ -500,12 +512,12 @@
             `;
             container.appendChild(div);
         }
-
+ 
         // Allow Enter key to submit
         document.getElementById('urlInput').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') processUrl();
         });
-
+ 
         // Handle bookmarklet results via URL params
         const params = new URLSearchParams(window.location.search);
         if (params.get('imdb_data')) {
@@ -521,3 +533,4 @@
     </script>
 </body>
 </html>
+ 
